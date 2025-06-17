@@ -1,1 +1,667 @@
-Hello World
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳市不二创新科技责任有限公司 - 3D打印切片软件解决方案专家</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover; /* 防止图片变形 */
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066CC;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #0066CC;
+        }
+
+        /* 首页Banner */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.pexels.com/photos/3997449/pexels-photo-3997449.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #0066CC;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0055AA;
+        }
+
+        /* 关于我们 */
+        .about {
+            padding: 100px 0;
+            background-color: #f9f9f9;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: #0066CC;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #0066CC;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* 核心产品 */
+        .products {
+            padding: 100px 0;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            height: 250px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .product-image::before {
+            content: "BuerSlice";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            background: #0066CC;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-content h3 {
+            margin-bottom: 15px;
+            color: #0066CC;
+        }
+
+        /* 技术优势 */
+        .features {
+            padding: 100px 0;
+            background-color: #f9f9f9;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: #0066CC;
+            margin-bottom: 20px;
+        }
+
+        /* 客户案例 */
+        .cases {
+            padding: 100px 0;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .case-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .case-image {
+            height: 200px;
+            background-color: #eee;
+        }
+
+        .case-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: #fff;
+        }
+
+        /* 联系我们 */
+        .contact {
+            padding: 100px 0;
+            background-color: #f9f9f9;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            color: #0066CC;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 15px;
+            color: #0066CC;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+        }
+
+        .footer-column ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #ccc;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">不二<span>创新</span></div>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#products">核心产品</a></li>
+                    <li><a href="#features">技术优势</a></li>
+                    <li><a href="#cases">客户案例</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 首页Banner -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>3D打印切片软件解决方案专家</h1>
+                <p>专注工业级3D打印切片算法研发，助力企业实现高效、精准的增材制造</p>
+                <a href="#contact" class="btn">免费申请试用</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>关于不二创新</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>深圳市不二创新科技责任有限公司成立于2018年，是一家专注于3D打印切片软件研发的高新技术企业。我们核心团队由来自工业软件、计算机图形学领域的博士及10年以上3D打印行业经验的专家组成，累计服务超过200家工业制造、医疗、科研领域的客户。</p>
+                    <br>
+                    <p>公司自主研发的「不二切片」（BuerSlice）系列软件，覆盖从模型修复、支撑生成、参数优化到切片生成的全流程，支持FDM、SLA、SLS、金属3D打印等多种技术路线，已帮助客户将打印成功率提升40%，生产周期缩短35%。</p>
+                </div>
+                <div class="about-image">
+                    <!-- 替换为实际研发团队工作场景图 -->
+                    <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="不二创新研发团队工作场景">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心产品 -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心产品</h2>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- 替换为BuerSlice工业版界面截图 -->
+                        <img src="https://images.pexels.com/photos/3997449/pexels-photo-3997449.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="BuerSlice工业版软件界面">
+                    </div>
+                    <div class="product-content">
+                        <h3>BuerSlice 工业版</h3>
+                        <p>面向金属3D打印（SLM）、尼龙烧结（SLS）等工业级场景，支持多材料混合打印参数优化，兼容主流工业打印机（如EOS、3D Systems、华曙高科）。</p>
+                        <p><strong>核心功能：</strong>金属收缩补偿算法、多激光同步切片、粉末床温度场模拟</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- 替换为BuerSlice医疗版界面截图 -->
+                        <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="BuerSlice医疗版软件界面">
+                    </div>
+                    <div class="product-content">
+                        <h3>BuerSlice 医疗版</h3>
+                        <p>针对骨科植入物、齿科模型等医疗3D打印场景，通过FDA/CE认证的生物相容性切片算法，支持钛合金、PEEK等医用材料的精准切片。</p>
+                        <p><strong>核心功能：</strong>植入物表面粗糙度优化、支撑结构自动避让、DICOM模型无缝导入</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- 替换为BuerSlice消费版界面截图 -->
+                        <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="BuerSlice消费版软件界面">
+                    </div>
+                    <div class="product-content">
+                        <h3>BuerSlice 消费版</h3>
+                        <p>面向教育、文创、个人创客的轻量化切片工具，支持手机端预览、一键生成G-code，降低3D打印入门门槛。</p>
+                        <p><strong>核心功能：</strong>模型自动修复、创意支撑结构、多色打印分层管理</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术优势 -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>技术优势</h2>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI智能优化</h3>
+                    <p>基于深度学习的支撑结构生成算法，自动识别模型薄弱区域，支撑数量减少30%，去除更便捷</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>高速切片引擎</h3>
+                    <p>自主研发的并行计算框架，1GB模型切片仅需15秒，比传统软件快5-8倍</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔧</div>
+                    <h3>多设备兼容</h3>
+                    <p>支持超过200款工业级3D打印机，提供EOS、Stratasys等厂商的官方插件</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>数据驱动分析</h3>
+                    <p>内置打印成功率预测模型，实时生成质量报告，帮助用户持续优化工艺参数</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户案例 -->
+    <section id="cases" class="cases">
+        <div class="container">
+            <div class="section-title">
+                <h2>客户案例</h2>
+            </div>
+            <div class="case-grid">
+                <div class="case-card">
+                    <div class="case-image">
+                        <!-- 替换为医疗植入物切片效果对比图 -->
+                        <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="某医疗科技公司使用BuerSlice的案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>某医疗科技</h3>
+                        <p>使用BuerSlice医疗版为髋关节植入物切片，表面粗糙度降低至Ra≤0.8μm，生物相容性检测通过率提升至98%</p>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <!-- 替换为汽车零部件切片效果对比图 -->
+                        <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="某汽车零部件厂商使用BuerSlice的案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>某汽车零部件厂商</h3>
+                        <p>采用BuerSlice工业版优化SLS尼龙齿轮切片，打印成功率从65%提升至92%，单批次生产周期缩短2天</p>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <!-- 替换为高校实验室使用场景图 -->
+                        <img src="https://images.pexels.com/photos/3045425/pexels-photo-3045425.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="某高校实验室使用BuerSlice的案例">
+                    </div>
+                    <div class="case-content">
+                        <h3>某高校实验室</h3>
+                        <p>通过BuerSlice消费版实现3D打印教学切片自动化，学生模型一次成型率提升至85%，教学效率提高40%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我们</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>深圳市不二创新科技责任有限公司</h3>
+                    <p><strong>地址：</strong>深圳市龙岗区坂田街道马安堂社区坂田大道南1号江南大厦301</p>
+                    <p><strong>电话：</strong>15914078947</p>
+                    <p><strong>邮箱：</strong>boolerule@gmail.com</p>
+                    <p><strong>工作时间：</strong>周一至周五 9:00-18:00</p>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="电子邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" placeholder="联系电话">
+                        </div>
+                        <div class="form-group">
+                            <select>
+                                <option value="">请选择需求类型</option>
+                                <option value="工业版">工业版咨询</option>
+                                <option value="医疗版">医疗版咨询</option>
+                                <option value="消费版">消费版咨询</option>
+                                <option value="技术支持">技术支持</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="请描述您的具体需求..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">提交需求</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于不二</h3>
+                    <ul>
+                        <li><a href="#about">公司简介</a></li>
+                        <li><a href="#">发展历程</a></li>
+                        <li><a href="#">团队介绍</a></li>
+                        <li><a href="#">企业文化</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>产品服务</h3>
+                    <ul>
+                        <li><a href="#products">BuerSlice工业版</a></li>
+                        <li><a href="#products">BuerSlice医疗版</a></li>
+                        <li><a href="#products">BuerSlice消费版</a></li>
+                        <li><a href="#">定制开发</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>资源中心</h3>
+                    <ul>
+                        <li><a href="#">技术白皮书</a></li>
+                        <li><a href="#">应用案例库</a></li>
+                        <li><a href="#">视频教程</a></li>
+                        <li><a href="#">API文档</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <div class="social-links">
+                        <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTIuMDYgMGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MjMgMC0xMC00LjQ3Ny0xMC0xMHM0LjQ3Ny0xMCAxMC0xMCAxMCA0LjQ3NyAxMCAxMC00LjQ3NyAxMC0xMCAxMHptMS03aC0ydi04aDJ2OHptLTEtOGgydi0yaC0ydjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+" alt="微信"></a>
+                        <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTkuNTUgMGMtMTAuNDUgMC0xOSA4LjU1LTE5IDE5czguNTUgMTkgMTkgMTkgMTktOC41NSAxOS0xOS04LjU1LTE5LTE5LTE5em0wIDIyLjA5MUgxN1YxMi41ODloMi41NTF6TTkuNzQ5IDE4LjE0NWgtMS4yODFjLS4wOTUgMC0uMTc4LS4wMzYtLjI2Ni0uMDkxaC0uMDAyYy0uMDU0IDAtLjA5NC4wMzUtLjEwNy4wODZhLjk4NyAxLjk4NyAwIDAgMCAxLjA0NyAxLjA0N3MuMDQ3LS4wNDcgLjA0Ny0uMDQ3YzAtLjAyOC0uMDItLjA2OC0uMDgtLjEwN2gtLjAwMWMtLjA5NSAwLS4xNzguMDM2LS4yNjYuMDkxbC0uMDAyIDBoLTEuMjkzdjEuMDIzaC4wMDJjLjA4NiAwIC4xMjUuMDM1LjE0Ny4wODZhLjk3Ny45NzcgMCAwIDAgMS4wNDYuMDQ3aC4wMDJjLjA5NSAwIC4xNzguMDM2LjI2Ni4wOTFsLjAwMiAwaDEuMjkzdjEuMDIzaC0uMDAyYy0uMDg2IDAtLjEwNy0uMDQ3LS4xMDctLjA4NlYxOC4xNDV6IiBmaWxsPSIjZmZmIi8+PC9zdmc+" alt="LinkedIn"></a>
+                        <a href="#"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMTIgMGMtNi42MjcgMC0xMiA1LjM3My0xMiAxMnM1LjM3MyAxMiAxMiAxMiAxMi01LjM3MyAxMi0xMi01LjM3My0xMi0xMi0xMnptMCAyMmMtNS41MjMgMC0xMC00LjQ3Ny0xMC0xMHM0LjQ3Ny0xMCAxMC0xMCAxMCA0LjQ3NyAxMCAxMC00LjQ3NyAxMC0xMCAxMHptMS03aC0ydi04aDJ2OHptLTEtOGgydi0yaC0ydjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+" alt="Facebook"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 深圳市不二创新科技责任有限公司 | 粤ICP备XXXXXXXX号</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
